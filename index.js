@@ -29,3 +29,5 @@ module.exports = function (lookup) {
         });
     }
 };
+
+module.exports.withLoader = module.exports;
