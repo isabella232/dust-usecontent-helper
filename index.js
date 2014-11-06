@@ -13,12 +13,13 @@ module.exports = function (lookup) {
     };
 
     function useContent(chunk, ctx, bodies, params) {
+        var locals = ctx.get('context');
         if (!bodies.block) {
             return chunk;
         }
 
         return chunk.map(function (chunk) {
-            lookup(ctx.get('locality'), params.bundle, function (err, content) {
+            lookup(locals.contentLocality || locals.locality, params.bundle, function (err, content) {
                 if (err) {
                     chunk.setError(err);
                 } else {
