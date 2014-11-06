@@ -2,7 +2,7 @@
 
 module.exports = function (lookup) {
 
-    if (typeof lookup != 'function' || lookup.length != 2) {
+    if (typeof lookup != 'function' || lookup.length != 3) {
         throw new TypeError("lookup function must be in the form function(bundle, callback) { ... }");
     }
 
@@ -18,7 +18,7 @@ module.exports = function (lookup) {
         }
 
         return chunk.map(function (chunk) {
-            lookup(params.bundle, function (err, content) {
+            lookup(ctx.get('locality'), params.bundle, function (err, content) {
                 if (err) {
                     chunk.setError(err);
                 } else {
