@@ -17,6 +17,7 @@ test('Does loader get called?', function (t) {
 
     dustjs.loadSource(dustjs.compile('{@useContent bundle="test"}{/useContent}', 'test'));
     dustjs.render('test', {}, function (err, out) {
+        t.pass("loader is called");
         t.end();
     });
 });
