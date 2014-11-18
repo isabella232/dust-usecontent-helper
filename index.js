@@ -2,8 +2,8 @@
 
 module.exports = function (lookup) {
 
-    if (typeof lookup != 'function' || lookup.length != 3) {
-        throw new TypeError("lookup function must be in the form function(bundle, callback) { ... }");
+    if (typeof lookup !== 'function' || lookup.length !== 3) {
+        throw new TypeError("lookup function must be in the form function(locality, bundle, callback) { ... }");
     }
 
     return {
