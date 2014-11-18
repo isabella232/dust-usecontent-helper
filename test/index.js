@@ -2,7 +2,7 @@ var test = require('tape');
 var dustjs = require('dustjs-linkedin');
 
 test('Does helper load?', function (t) {
-    require('../index')(function(bundle, cont) {
+    require('../index')(function(locality, bundle, cont) {
     }).registerWith(dustjs);
 
     t.equal(typeof dustjs.helpers.useContent, 'function', 'Helper loaded');
@@ -10,7 +10,7 @@ test('Does helper load?', function (t) {
 });
 
 test('Does loader get called?', function (t) {
-    require('../index')(function(bundle, cont) {
+    require('../index')(function(locality, bundle, cont) {
         t.pass('loader got called');
         cont(null, {"hello": "world"});
     }).registerWith(dustjs);
