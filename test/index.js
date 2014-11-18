@@ -1,3 +1,5 @@
+"use strict";
+
 var test = require('tape');
 var dustjs = require('dustjs-linkedin');
 
