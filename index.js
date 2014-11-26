@@ -6,11 +6,13 @@ module.exports = function (lookup) {
         throw new TypeError("lookup function must be in the form function(locality, bundle, callback) { ... }");
     }
 
-    return {
-        registerWith: function registerWith(dust) {
-            dust.helpers.useContent = useContent;
-        }
+    var registerWith = function registerWith(dust) {
+        dust.helpers.useContent = useContent;
     };
+
+    registerWith.registerWith = registerWith;
+
+    return registerWith;
 
     function useContent(chunk, ctx, bodies, params) {
         var locals = ctx.get('context');
