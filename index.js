@@ -21,7 +21,7 @@ module.exports = function (lookup) {
         }
 
         return chunk.map(function (chunk) {
-            lookup(locals.contentLocality || locals.locality, params.bundle, function (err, content) {
+            lookup(locals.contentLocality || locals.locality || {}, params.bundle, function (err, content) {
                 if (err) {
                     chunk.setError(err);
                 } else {
