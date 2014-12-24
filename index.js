@@ -15,7 +15,7 @@ module.exports = function (lookup) {
     return registerWith;
 
     function useContent(chunk, ctx, bodies, params) {
-        var locals = ctx.get('context');
+        var locals = ctx.get('context') || {};
         if (!bodies.block) {
             return chunk;
         }
