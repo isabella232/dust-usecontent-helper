@@ -1,6 +1,6 @@
 {
   "name": "dust-usecontent-helper",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "A dust helper to load i18n content at render time",
   "main": "index.js",
   "scripts": {
