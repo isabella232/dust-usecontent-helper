@@ -13,7 +13,8 @@ test('Does helper load?', function (t) {
 });
 
 test('Does loader get called?', function (t) {
-    require('../index')(function(locality, bundle, cont) {
+    require('../index')(function(context, bundle, cont) {
+        t.same(context.options.option, true);
         t.pass('loader got called');
         cont(null, {"hello": "world"});
     }).registerWith(dustjs);
@@ -21,7 +22,7 @@ test('Does loader get called?', function (t) {
     messages.registerWith(dustjs);
 
     dustjs.loadSource(dustjs.compile('{@useContent bundle="test"}{@message key="hello" /}{/useContent}', 'test'));
-    dustjs.render('test', {}, function (err, out) {
+    dustjs.render('test', dustjs.context({}, { option: true }), function (err, out) {
         t.equal(out, "world");
         t.pass("loader is called");
         t.end();

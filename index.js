@@ -3,7 +3,7 @@
 module.exports = function (lookup) {
 
     if (typeof lookup !== 'function' || lookup.length !== 3) {
-        throw new TypeError("lookup function must be in the form function(locale, bundle, callback) { ... }");
+        throw new TypeError("lookup function must be in the form function(context, bundle, callback) { ... }");
     }
 
     var registerWith = function registerWith(dust) {
@@ -20,8 +20,7 @@ module.exports = function (lookup) {
         }
 
         return chunk.map(function (chunk) {
-            /* Accept either simply-named "locale" or paypal "locality" */
-            lookup(ctx.get('contextLocale') || ctx.get('contentLocality') || ctx.get('locale') || ctx.get('locality') || {}, params.bundle, function (err, content) {
+            lookup(ctx, params.bundle, function (err, content) {
                 if (err) {
                     chunk.setError(err);
                 } else {

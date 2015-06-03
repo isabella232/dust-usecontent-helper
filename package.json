@@ -10,7 +10,7 @@
   "license": "Apache 2.0",
   "devDependencies": {
     "dust-message-helper": "^3.0.0",
-    "dustjs-linkedin": "^2.4.2",
+    "dustjs-linkedin": "~2.7.1",
     "tape": "^3.0.0"
   }
 }
