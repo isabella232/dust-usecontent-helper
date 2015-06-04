@@ -12,19 +12,33 @@ test('Does helper load?', function (t) {
     t.end();
 });
 
-test('Does loader get called?', function (t) {
+test('Does loader work?', function (t) {
     require('../index')(function(context, bundle, cont) {
         t.same(context.options.option, true);
         t.pass('loader got called');
-        cont(null, {"hello": "world"});
+        if (bundle == 'test') {
+            cont(null, {"hello": "world"});
+        } else {
+            cont(null, {"hello": "this morning!"});
+        }
     }).registerWith(dustjs);
 
     messages.registerWith(dustjs);
 
-    dustjs.loadSource(dustjs.compile('{@useContent bundle="test"}{@message key="hello" /}{/useContent}', 'test'));
-    dustjs.render('test', dustjs.context({}, { option: true }), function (err, out) {
-        t.equal(out, "world");
-        t.pass("loader is called");
-        t.end();
+    t.test('does loader get called?', function (t) {
+        dustjs.loadSource(dustjs.compile('{@useContent bundle="test"}{@message key="hello" /}{/useContent}', 'test'));
+        dustjs.render('test', dustjs.context({}, { option: true }), function (err, out) {
+            t.equal(out, "world");
+            t.pass("loader is called");
+            t.end();
+        });
+    });
+
+    t.test('do nested helpers work?', function (t) {
+        dustjs.loadSource(dustjs.compile('{@useContent bundle="test"}{@useContent bundle="test2"}{@message key="hello" /}{/useContent}{/useContent}', 'nested'));
+        dustjs.render('nested', dustjs.context({}, { option: true }), function (err, out) {
+            t.equal(out, "this morning!");
+            t.end();
+        });
     });
 });
