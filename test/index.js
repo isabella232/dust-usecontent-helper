@@ -42,3 +42,32 @@ test('Does loader work?', function (t) {
         });
     });
 });
+
+test('bundle annotation', function (t) {
+    require('../index')(function(context, bundle, cont) {
+        t.same(context.options.option, true);
+        t.pass('loader got called');
+        if (bundle == 'test') {
+            cont(null, {"hello": "world"});
+        } else {
+            cont(null, {"hello": "this morning!"});
+        }
+    }).registerWith(dustjs);
+
+    messages.registerWith(dustjs);
+
+    dustjs.helpers.wompwomp = function (chunk, context, blocks, params) {
+        return chunk.map(function (chunk) {
+            chunk.end(context.get('intl.bundle'));
+        });
+    }
+
+    t.test('does loader get called?', function (t) {
+        dustjs.loadSource(dustjs.compile('{@useContent bundle="test"}{@wompwomp/}{/useContent}', 'test'));
+        dustjs.render('test', dustjs.context({}, { option: true }), function (err, out) {
+            t.error(err);
+            t.equal(out, "test");
+            t.end();
+        });
+    });
+});

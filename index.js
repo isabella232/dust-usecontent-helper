@@ -24,8 +24,8 @@ module.exports = function (lookup) {
                 if (err) {
                     chunk.setError(err);
                 } else {
-                    ctx = ctx.push({ intl: { messages: content } });
-                    hackGibson(ctx, content);
+                    ctx = ctx.push({ intl: { messages: content, bundle: params.bundle } });
+                    hackGibson(ctx, content, params.bundle);
                     bodies.block(chunk, ctx).end();
                 }
             });
@@ -33,25 +33,25 @@ module.exports = function (lookup) {
     }
 };
 
-function hackGibson(ctx, content) {
+function hackGibson(ctx, content, bundle) {
     var oldShiftBlocks = ctx.shiftBlocks;
     var oldPush = ctx.push;
     ctx.shiftBlocks = function(locals) {
         return oldShiftBlocks.call(this, objMap(locals, function (l) {
-            return wrapBlock(l, content);
+            return wrapBlock(l, content, bundle);
         }));
     };
 
     ctx.push = function(head, idx, len) {
         var newCtx = oldPush.apply(this, arguments);
-        hackGibson(newCtx, content);
+        hackGibson(newCtx, content, bundle);
         return newCtx;
     };
 }
 
-function wrapBlock(block, content) {
+function wrapBlock(block, content, bundle) {
     return function (chunk, ctx) {
-        ctx = ctx.push({intl: { messages: content }});
+        ctx = ctx.push({intl: { messages: content, bundle: bundle }});
         return block(chunk, ctx);
     }
 }
