@@ -20,3 +20,18 @@ test('type check', function (t) {
 
     t.end();
 });
+
+test('loader fails', function (t) {
+    t.plan(3);
+    helper(function (a, b, c) {
+        t.pass('called');
+        c(new Error('oops'));
+    }).registerWith(dustjs);
+
+    var tmpl = dustjs.loadSource(dustjs.compile('{@useContent bundle="oops"}test{/useContent}'));
+    dustjs.render(tmpl, {}, function (err, body) {
+        t.match(err, { message: "oops" });
+        t.error(body);
+        t.end();
+    });
+});
