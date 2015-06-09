@@ -41,6 +41,14 @@ test('Does loader work?', function (t) {
             t.end();
         });
     });
+
+    t.test('do empty helpers work?', function (t) {
+        var tmpl = dustjs.loadSource(dustjs.compile('!{@useContent bundle="test" /}!'));
+        dustjs.render(tmpl, dustjs.context({}, { option: true }), function (err, out) {
+            t.equal(out, "!!");
+            t.end();
+        });
+    });
 });
 
 test('bundle annotation', function (t) {
