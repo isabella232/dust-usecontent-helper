@@ -3,9 +3,10 @@
 var test = require('tap').test;
 var dustjs = require('dustjs-linkedin');
 var messages = require('dust-message-helper');
+var helper = require('../');
 
 test('Does helper load?', function (t) {
-    require('../index')(function(locality, bundle, cont) {
+    helper(function(locality, bundle, cont) {
     }).registerWith(dustjs);
 
     t.equal(typeof dustjs.helpers.useContent, 'function', 'Helper loaded');
@@ -13,7 +14,7 @@ test('Does helper load?', function (t) {
 });
 
 test('Does loader work?', function (t) {
-    require('../index')(function(context, bundle, cont) {
+    helper(function(context, bundle, cont) {
         t.same(context.options.option, true);
         t.pass('loader got called');
         if (bundle == 'test') {
@@ -49,10 +50,11 @@ test('Does loader work?', function (t) {
             t.end();
         });
     });
+
 });
 
 test('bundle annotation', function (t) {
-    require('../index')(function(context, bundle, cont) {
+    helper(function(context, bundle, cont) {
         t.same(context.options.option, true);
         t.pass('loader got called');
         if (bundle == 'test') {
