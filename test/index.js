@@ -1,6 +1,6 @@
 "use strict";
 
-var test = require('tape');
+var test = require('tap').test;
 var dustjs = require('dustjs-linkedin');
 var messages = require('dust-message-helper');
 
@@ -62,12 +62,10 @@ test('bundle annotation', function (t) {
         });
     }
 
-    t.test('does loader get called?', function (t) {
-        dustjs.loadSource(dustjs.compile('{@useContent bundle="test"}{@wompwomp/}{/useContent}', 'test'));
-        dustjs.render('test', dustjs.context({}, { option: true }), function (err, out) {
-            t.error(err);
-            t.equal(out, "test");
-            t.end();
-        });
+    dustjs.loadSource(dustjs.compile('{@useContent bundle="test"}{@wompwomp/}{/useContent}', 'test'));
+    dustjs.render('test', dustjs.context({}, { option: true }), function (err, out) {
+        t.error(err);
+        t.equal(out, "test");
+        t.end();
     });
 });
