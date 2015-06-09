@@ -4,13 +4,15 @@
   "description": "A dust helper to load i18n content at render time",
   "main": "index.js",
   "scripts": {
-    "test": "tap test/*.js"
+    "test": "nyc tap test/*.js && nyc report",
+    "cover": "nyc report --reporter=lcov"
   },
   "author": "Aria Stewart <ariastewart@paypal.com>",
   "license": "Apache 2.0",
   "devDependencies": {
     "dust-message-helper": "^3.0.0",
     "dustjs-linkedin": "~2.7.1",
+    "nyc": "^2.3.0",
     "tap": "^1.2.0"
   }
 }
