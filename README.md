@@ -1,9 +1,6 @@
-dust-usecontent-helper
-======================
+# dust-usecontent-helper
 
 A dustjs helper to load content bundles into the context for use by the [@message helper] or the [formatjs message helper].
-
-Lead Maintainer: [Aria Stewart]
 
 [![Build Status]][travis]
 
